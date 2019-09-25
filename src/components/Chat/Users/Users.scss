@@ -1,0 +1,10 @@
+.chatContainer__users {
+  padding: 10px 20px;
+  background-color: #a9a9a938;
+  flex-grow: 1;
+  border-left: 1px solid darkgrey;
+  .userBlock {
+    color: #0095ffc9;
+    margin-top: 10px;
+  }
+}

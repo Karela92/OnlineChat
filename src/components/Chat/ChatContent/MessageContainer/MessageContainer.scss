@@ -1,0 +1,9 @@
+.chatContainer__messageBlock {
+  border-top: 1px solid grey;
+  padding: 10px 20px;
+  background-color: #a9a9a954;
+  .messageText {
+    background-color: white;
+    padding: 5px 10px;
+  }
+}

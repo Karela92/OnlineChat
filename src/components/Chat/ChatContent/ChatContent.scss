@@ -1,0 +1,32 @@
+.chatContainer__content {
+  width: 75%;
+  .chatContainer {
+    padding: 20px;
+    overflow-y: scroll;
+    height: 70vh;
+    .messageContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 30px;
+      .userContainer {
+        width: 85%;
+        &__userName {
+          font-weight: 700;
+          color: #0095ffc9;
+          margin-bottom: 10px;
+        }
+        &__text {
+          font-weight: 300;
+        }
+      }
+      .timeContainer {
+        font-style: italic;
+        color: #808080cc;
+      }
+      &:last-child {
+        margin-bottom: 50px;
+      }
+    }
+  }
+}

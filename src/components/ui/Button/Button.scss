@@ -1,0 +1,28 @@
+.primary {
+  background-color: #009797;
+  border: none;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  border-radius: 3px;
+  padding: 8px 20px;
+  margin: 10px 0;
+}
+
+.additional, .cancel {
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  border-radius: 3px;
+  padding: 5px 20px;
+}
+
+button:disabled {
+  background-color: grey;
+}
+
+.removeButton {
+  background-color: #ff000096;
+}
