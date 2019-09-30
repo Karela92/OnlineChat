@@ -1,6 +1,5 @@
-.chatContainer__content {
-  width: 75%;
-  .chatContainer {
+.chatContainer {
+  &__content {
     padding: 20px;
     overflow-y: scroll;
     height: 70vh;
@@ -15,6 +14,9 @@
           font-weight: 700;
           color: #0095ffc9;
           margin-bottom: 10px;
+          &--yourSelf {
+            color: #ff000091;
+          }
         }
         &__text {
           font-weight: 300;

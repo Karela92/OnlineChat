@@ -9,6 +9,7 @@ export const storageMiddleware = ({ getState }) => next => action => {
     localStorage.setItem('chatUsers',
       JSON.stringify([...getState().chat.chatUsers.slice(0, action.payload.userId - 1), ...getState().chat.chatUsers.slice(action.payload.userId)])
     );
+    sessionStorage.clear();
   }
   if (action.type === SET_NEW_MESSAGE) {
     localStorage.setItem('chatMessages', JSON.stringify([...getState().chat.chatMessages, action.payload]));

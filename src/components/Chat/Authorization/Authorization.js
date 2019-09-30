@@ -22,7 +22,7 @@ export default class Authorization extends Component {
     const { userName } = this.state;
     const { chatUsers } = this.props;
     const nameIsAlreadyExist = chatUsers.find(user => user === userName);
-    const nameIsWrongSymbols = !userName.match('[a-zA-Zа-яА-Я][^#&<>\"~;$^%{}?]{1,20}$');
+    const nameIsWrongSymbols = !userName.match('[a-zA-Zа-яА-Я][^#&<>"~;$^%{}?]{1,20}$');
     if (nameIsAlreadyExist) {
       return 'Это имя уже занято';
     } else if (nameIsWrongSymbols) {
@@ -31,17 +31,16 @@ export default class Authorization extends Component {
     return null;
   }
 
-  handleSubmit(ev) {
-    ev.preventDefault();
+  handleSubmit() {
     const { userName } = this.state;
-    const { chatUsers, getAuthorizeUser } = this.props;
+    const { getAuthorizeUser } = this.props;
     const isInvalid = this.checkNameValidate();
     if (isInvalid) {
       return this.setState(() => ({
         errorMessage: isInvalid
       }));
     }
-    getAuthorizeUser(userName);
+    getAuthorizeUser(userName.trim());
   }
 
   renderErrorMessage(errorMessage) {
@@ -52,6 +51,12 @@ export default class Authorization extends Component {
     )
   }
 
+  handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      this.handleSubmit();
+    }
+  }
+
   render() {
     const { userName, errorMessage } = this.state;
     return (
@@ -60,19 +65,18 @@ export default class Authorization extends Component {
         <div className='authorizeForm__container'>
           <Input
             value={ userName }
+            handleKeyDown={ ev => this.handleKeyDown(ev) }
             placeHolder='Введите ваше имя'
-            handleChange={ (ev) => this.handleFieldChange(ev.target.value) }
+            handleChange={ ev => this.handleFieldChange(ev.target.value) }
           />
           <Button
             type='submit'
             content='Войти'
             styleType='primary'
-            handleChange= { (ev) => this.handleSubmit(ev) }
+            handleChange= { ev => this.handleSubmit(ev) }
           />
         </div>
-        {
-          errorMessage && this.renderErrorMessage(errorMessage)
-        }
+        { errorMessage && this.renderErrorMessage(errorMessage) }
       </div>
     );
   }

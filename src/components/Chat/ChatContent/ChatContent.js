@@ -9,29 +9,30 @@ export default class ChatContent extends Component {
   componentDidMount() {
     setInterval(() => {
       this.getCheckMessagesUpdates();
-    }, 1000)
+    }, 250)
   }
 
   getCheckMessagesUpdates() {
     const { updateViewMessages, messagesCounter } = this.props;
-    if (JSON.parse(localStorage.getItem('chatMessages')) && JSON.parse(localStorage.getItem('chatMessages')).length !== messagesCounter) {
-      console.log(JSON.parse(localStorage.getItem('chatMessages')),123);
-      updateViewMessages(JSON.parse(localStorage.getItem('chatMessages')));
+    const localStorageChatMessages = JSON.parse(localStorage.getItem('chatMessages'));
+    if (localStorageChatMessages && localStorageChatMessages.length !== messagesCounter) {
+      updateViewMessages(localStorageChatMessages);
     }
   }
 
   render() {
     const { currentUser, setNewMessage, chatMessages } = this.props;
     return (
-      <div className='chatContainer__content'>
-        <div className='chatContainer'>
+      <div className='chatContainer'>
+        <div className='chatContainer__content'>
           {
             chatMessages.map((message, index) => {
+              const isSameUser = currentUser.currentUserName === message.user;
               return(
                 <div className='messageContainer' key={ index }>
                   <div className='userContainer'>
-                    <div className='userContainer__userName'>
-                      { message.user }
+                    <div className={ `userContainer__userName ${isSameUser ? 'userContainer__userName--yourSelf' : ''}` }>
+                      { message.user } { isSameUser ? <span>(Вы)</span> : null }
                     </div>
                     <div className='userContainer__text'>{ message.messageText }</div>
                   </div>

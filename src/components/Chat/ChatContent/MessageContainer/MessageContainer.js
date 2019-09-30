@@ -8,13 +8,17 @@ import './MessageContainer.scss';
 
 export default class MessageContainer extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.contentEditable = React.createRef();
     this.state = {
       messageText: ''
     }
   };
+
+  componentDidMount() {
+    this.contentEditable.current.focus();
+  }
 
   handleChange(value) {
     this.setState(() => ({
@@ -22,17 +26,23 @@ export default class MessageContainer extends Component {
     }))
   }
 
-  handleSubmit(messageText) {
+  handleSubmit() {
     const { currentUser, setNewMessage } = this.props;
     const params = {
       createdMessageTime: moment().format('HH:MM'),
       user: currentUser.currentUserName,
-      messageText
+      messageText: this.contentEditable.current.textContent
     };
     setNewMessage(params);
     this.setState(() => ({
       messageText: ''
-    }))
+    }));
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      this.handleSubmit(this.state.messageText);
+    }
   }
 
   render() {
@@ -43,7 +53,8 @@ export default class MessageContainer extends Component {
           innerRef={this.contentEditable}
           html={messageText}
           disabled={false}
-          onChange={(ev) => this.handleChange(ev.target.value)}
+          onKeyUp={ ev => this.handleKeyDown(ev)}
+          onChange={ ev => this.handleChange(ev.target.value)}
           className='messageText'
         />
         <Button

@@ -5,23 +5,27 @@ import './Users.scss';
 export default class Users extends Component {
 
   componentDidMount() {
-    window.addEventListener("beforeunload", this.onUnload)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload)
-  }
-
-  onUnload() {
     const { currentUser, removeUserOnExit } = this.props;
-    removeUserOnExit(currentUser);
+    window.addEventListener('beforeunload', (event) => {
+      removeUserOnExit(currentUser);
+    });
+    setInterval(() => {
+      this.getCheckUsersUpdates();
+    }, 250)
+  }
+
+  getCheckUsersUpdates() {
+    const { updateChatUsers, usersCounter } = this.props;
+    const localStorageChatUsers = JSON.parse(localStorage.getItem('chatUsers'));
+    if (localStorageChatUsers && localStorageChatUsers.length !== usersCounter) {
+      updateChatUsers(localStorageChatUsers);
+    }
   }
 
   render() {
     const { chatUsers } = this.props;
-    console.log(chatUsers,'chatUsers');
     return (
-      <div className='chatContainer__users'>
+      <div>
         В чате сейчас находятся:
         {
           chatUsers.map((user, index) => {
